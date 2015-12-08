@@ -34,7 +34,7 @@ if [ -z "$uploadto" ] ;then
   curl --user "$GITHUB_USER" \
     --request POST \
     --data @- \
-    https://api.github.com/repos/$owner/$repo/releases <<-EOF
+    https://api.github.com/repos/$owner/$repo/releases >/dev/null <<-EOF
 	{
 	$(pre_release $TRAVIS_TAG)
 	 "tag_name": "$TRAVIS_TAG"
@@ -62,12 +62,16 @@ upload_file() {
       return
   esac
 
-  curl \
+  if (curl \
     --user "$GITHUB_USER" \
     --request POST \
     -H "Content-type: $type" \
     --data @"$file" \
-    "$uploadto?name=$(basename $file)"
+    "$uploadto?name=$(basename $file)" | grep _created_at ) ; then
+    echo "OK"
+  else
+    echo "FAILED"
+  fi
 }
 
 for tar in $(ls -1 *.tar.gz)
