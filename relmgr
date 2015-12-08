@@ -21,6 +21,7 @@ echo "$uploadto"
 
 upload_file() {
   local file="$1"
+  [ -f "$file" ] || return
 
   case "$file" in
     *.gz)
