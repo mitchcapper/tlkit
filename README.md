@@ -1,4 +1,6 @@
 # TLKIT
+[![Build Status](https://api.travis-ci.org/alejandroliu/tlkit.png?branch=master)](http://travis-ci.org/alejandroliu/tlkit)
+
 
 Turtle Labs Kit of Miscellaneous Linux utilities
 
