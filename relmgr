@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+[ -z $TRAVIS_TAG ] && exit
+echo "TAG: $TRAVIS_TAG"
+
