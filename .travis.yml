@@ -6,17 +6,18 @@ script:
  - make OPTIMIZ="-O3 -s"
  - make tar BUILD_NUM=$TRAVIS_BUILD_NUMBER
  - make tlkit.spec BUILD_NUM=$TRAVIS_BUILD_NUMBER
- - docker-rpm-builder dir alanfranz/drb-epel-7-x86-64:latest . .
+# - docker-rpm-builder dir alanfranz/drb-epel-7-x86-64:latest . .
  - rm -f */*-debuginfo-*.rpm
  - ./relmgr
- - package_cloud push aliuly/localapps/el/7 */*.el7.*.rpm
+# - package_cloud push aliuly/localapps/el/7 */*.el7.*.rpm
 before_install:
- - sudo apt-get update
+# - sudo apt-get update
  - sudo -H pip install docker-rpm-builder
- - gem install package_cloud
+# - gem install package_cloud
 compiler: gcc
 env:
   global:
    - secure: "JiXJhPkUsFPJkLxCqQwN1KjuMfJE26KglOyz+cE8ZMrZWPoLKNPk4qIe6bxj029SLoFdYzl0O9ulTppTV5QlnnYoEp6P44IFkEcTT2WGfczSyjdumiqUu0eU5v6hCpcwClwI+Cxfuy3BUldR6Pn5zPwzb1JLXY7l7RMqwdLTNtxM1D6Q7La7rInM3l7txIboD99ooQixufI1CqhR6BfJLBxSCVDcFSCKGp3qOhHqeKE/6+PJ0rajZzFoGvWH9CMEugpV52AMD+dT+YZ3xfgD6aU8zVZWhaZGdjDVEMyBx0NuWVU0nxd1u2D7aBScKWew3Lyb7wESZzD8QjPed6dLheiFFQGPlejjOonnZ7GEwFBKMHfFFH5q35wgQLBaWTae+aueJpxnoPJI8wpuIqdPBDQQAXYxmH+nyht5mCJJ1/XGVJQR9UyDHwPY3sAOBK578PGbubEt7MOofToCe/zoNx+XqGLcW9JEggxZXqmHRq5DNKZB/2PHSVxfQ+bYPaj+KxukaQTb9V1aSwzTcEn8j+er5ezNWRB+XL4xmRkWfluvKKlZhE4EpEqvhoNPuRLoMPBHkZJFgNQIaNvhBO86Eq8biEzZQInn39hAjuzFXCaINqoOC86zahTckPFWLOlPVpDkBeCqm3IEU4lB1NXmzMk33M4rCO+fAgWWNZ6uN1o="
-   - secure: "KR/TdOXnH/aJG95zDzXAD4euNSCdWoQ5AIt0/mzwRz1bWJFKHxhBKL0cVDJ+y8afB67NeS3EFyRDVhReHICG0pHK5kiQmOEnuHcb12LfynDECSBiT8p0eiXNh0nDqKlvaNjFo/0JLTQ+Xw7oySGhKphBd4rreFsgNGOXj8Q4ciK9yzfQuAAevqLFdEcC20P5PYGjau//3nDSxm36ox71m8NyGjW8fWppLbntFkjfp3Xsa7xk8AHkTSm5ivT1IJifwm0E+hgDgS95NE+pGje+gYOKidz5z9bsbTFF+FE+kZUS9Pm1aRsffS4AKlF6hGQzLj1I6DweaSlI9N0t1itSXvzxQqU3UvBrlG4QcsWQhgW32RMlyWG3LjPQzoL4rbVb8Adj1cd7q0vsWqd3rLOnoxNnzSEUda7bxQA0OTfcIaqPTn3vgoO2gHAB4v3hvjmLaHJ3VVR44cpOE52fWqnCGayjriC7zaiR+A1IxdmInpztaUU84Bor/CX/BY6uKvFFf5/y+k049YW6a0SKKZe9eh5ztYb3CqVwn2raytutGW2uATuR8xL3b4+JdP7+vtWwznPpHf3OS9C+5tl6cIY/0UF32/rSHuPzVHRufucletiVxiCw4YqcmxQx4/m8fFez5Co7N45moYTUWJ+bs/jdYqlsN0E2tIuPPz7VR4XeWUQ="
+   - secure: "GF8ReH4x+qMNzi8VVuONyEPca6gimg4Mhj7GjzOPHj5ucv8BOQMY6PNbr/4E8uNAU4I0VzlEOixIPamtjWkAPvJxB38ta5ttw8rUOmXLZzCY+tTr5VUHR/Q+b/Dzd7uQzDlLz8C0q0tfTVFmIEHToxIXZEc0VGXAAB8g+ObUTMq2vuq1dSdkZ2ZOBN75vbEj3N0bWZmxvSy4DWdnZ+vYuiczm5QHWf6mNd0dlcl5tY46VCBbwIpqDC+kuJ5cIkMV/hIodakPdEveH6QBpX9JxenWsm9WGiPqdb130V81uUXj6jYVDz/f20SXiLcNmOJ0z0dC78MwLPLnOKh//69fxNVdWn/mXTZHNWo5ppcunvL8dVUdM2yRYMri7jR/HjgYVmvnP6Eupkl/eYEfuRJM4myQZ3oS+MMUZM3JJQV7ESbPJ1bAxNKS7z8dzlJSBeCi3p54KolT6s41tIrN7rptTWcshfW0jdPxriu6AOdkipc45nImGwsTK7E/cuTxhGgm6l/5waO9fVJF3E4RsG/aQLSzueBYxT30Mxi5dSsi0QaAuGIqiF8+ypztUR8ASsslJ3IrgWgXC0Xn3e/m401mo8lP5ysDQoP8L/0fpUlye/70omVJacT5GwFfhxQjr6FRfHwZ94cEcM08KQzutzzfR8dyHI+h7kTPK4R7rBTQV14="
+
 
