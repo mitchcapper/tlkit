@@ -1,0 +1,5 @@
+#
+language: c
+script:
+ - make OPTIMIZ="-O3 -s"
+compiler: gcc
