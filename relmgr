@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-TRAVIS_TAG=v0.0.0
+
 [ -z $TRAVIS_TAG ] && exit
 echo "TAG: $TRAVIS_TAG"
 [ -z "$GITHUB_USER" ] && exit
@@ -39,7 +39,7 @@ upload_file() {
     --request POST \
     -H "Content-type: $type" \
     --data @"$file" \
-    "$uploadto?name=$file"
+    "$uploadto?name=$(basename $file)"
 }
 
 for tar in $(ls -1 *.tar.gz)
