@@ -6,6 +6,8 @@ License: GPL
 Group: System Environment/Base
 URL: http://www.0ink.net
 
+%define %debug_package %{nil}
+
 Source0: tlkit-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
