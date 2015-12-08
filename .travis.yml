@@ -9,7 +9,7 @@ script:
  - docker-rpm-builder dir alanfranz/drb-epel-7-x86-64:latest . .
  - rm -f */*-debuginfo-*.rpm
  - package_cloud push aliuly/localapps/el/7 */*.el7.*.rpm
- - "[ -n $TRAVIS_TAG ] && echo $TRAVIS_TAG"
+# - "[ -n $TRAVIS_TAG ] && echo $TRAVIS_TAG"
 before_install:
  - sudo apt-get update
  - sudo -H pip install docker-rpm-builder
