@@ -1,5 +1,50 @@
 #!/bin/sh
 #
+TRAVIS_TAG=v0.0.0
 [ -z $TRAVIS_TAG ] && exit
 echo "TAG: $TRAVIS_TAG"
+[ -z "$GITHUB_USER" ] && exit
+echo "Preparing git release"
+
+owner=$(echo "$GITHUB_USER" | cut -d: -f1)
+repo=$(basename $(pwd))
+uploadto=$(
+  curl \
+    --user "$GITHUB_USER" \
+    "https://api.github.com/repos/$owner/$repo/releases/tags/$TRAVIS_TAG" \
+    | awk '$1 == "\"upload_url\":" {print $2}' \
+    | sed -e 's/^"//' -e 's/{.*}",*$//'
+)
+echo "$uploadto"
+
+upload_file() {
+  local file="$1"
+
+  case "$file" in
+    *.gz)
+      local type=application/gzip
+      ;;
+    *.rpm)
+      local type=application/x-rpm
+      ;;
+    *)
+      return
+  esac
+
+  curl \
+    --user "$GITHUB_USER" \
+    --request POST \
+    -H "Content-type: $type" \
+    --data @"$file" \
+    "$uploadto?name=$file"
+}
+
+for tar in $(ls -1 *.tar.gz)
+do
+  upload_file $tar
+done
+for rpm in $(ls -1 */*.rpm)
+do
+  upload_file $rpm
+done
 
