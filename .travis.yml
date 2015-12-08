@@ -1,5 +1,9 @@
 #
 language: c
+sudo: required
 script:
  - make OPTIMIZ="-O3 -s"
+before_install:
+ - sudo apt-get update
+ - sudo apt-get -y install docker-rpm-builder
 compiler: gcc
