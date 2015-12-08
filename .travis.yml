@@ -8,6 +8,7 @@ script:
  - make tar BUILD_NUM=$TRAVIS_BUILD_NUMBER
  - make tlkit.spec BUILD_NUM=$TRAVIS_BUILD_NUMBER
  - docker-rpm-builder dir alanfranz/drb-epel-7-x86-64:latest . .
+ - ls -l
 before_install:
  - sudo apt-get update
  - sudo -H pip install docker-rpm-builder
