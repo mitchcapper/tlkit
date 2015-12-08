@@ -8,6 +8,7 @@ echo "Preparing git release"
 
 owner=$(echo "$GITHUB_USER" | cut -d: -f1)
 repo=$(basename $(pwd))
+set -x
 uploadto=$(
   curl \
     --user "$GITHUB_USER" \
