@@ -5,8 +5,11 @@ services:
  - docker
 script:
  - make OPTIMIZ="-O3 -s"
+ - make tar BUILD_NUM=$TRAVIS_BUILD_NUMBER
+ - make tlkit.spec
+ - docker-rpm-builder dir . .
 before_install:
  - sudo apt-get update
- - sudo pip install docker-rpm-builder
+ - sudo -H pip install docker-rpm-builder
  - # sudo apt-get -y install docker-rpm-builder
 compiler: gcc

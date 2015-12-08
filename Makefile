@@ -17,31 +17,54 @@
 #
 #_begin := $(shell ./scripts/init.sh)
 
+PKGNAME = tlkit
 TARGET = #arm-mv5sft-linux-gnueabi
 CC = $(TARGET)gcc
 LD = $(TARGET)gcc
 AR = $(TARGET)ar
-VERSION = tlk_0.1.0
+VERSION = 0.1.0
+CVERSION = tlk_$(VERSION)
+BUILD_NUM = 0
 
 PEDANTIC=-Wall -Wextra -std=gnu99 -pedantic
 
 GOPTZ = -Og
-OPTIMIZ = -g -D_DEBUG $(GOPTZ) # Debug build
+OPTFLAGS = -g -D_DEBUG $(GOPTZ) # Debug build
 #OPTIMIZ = -O3 # Prod build
 
-CFLAGS = $(OPTIMIZ) $(PEDANTIC) $(INCDIRS) $(XCFLAGS) -DVERSION=\"$(VERSION)\"
+CFLAGS = $(OPTFLAGS) $(PEDANTIC) $(INCDIRS) $(XCFLAGS) -DVERSION=\"$(CVERSION)\"
 #-O2 -I$(UTHASH_DIR)/src -I$(GDBM_LIBDIR)/src #-DHASH_TYPE=SHA256
 EXES = genrand lomount md5tee mkproto qt-faststart rvc w4d
+SRCS = Makefile *.c *.h *.txt *.md LICENSE
+PREFIX = /usr
+BINDIR = $(PREFIX)/bin
+MANDIR = $(PREFIX)/share/man
+
 
 all: $(EXES)
 
+tar:
+	make $(PKGNAME).spec
+	tmp=$$(mktemp -d -p .) ; \
+	mkdir $$tmp/$(PKGNAME)-$(VERSION) ; \
+	mv $(PKGNAME).spec $$tmp/$(PKGNAME)-$(VERSION) ; \
+	cp $(SRCS) $$tmp/$(PKGNAME)-$(VERSION) ; \
+	tar zcf $(PKGNAME)-$(VERSION).tar.gz -C $$tmp $(PKGNAME)-$(VERSION) ; \
+	rm -rf $$tmp
+
+$(PKGNAME).spec: $(PKGNAME).spec.in
+	sed \
+	   -e 's!@VERSION@!$(VERSION)!' \
+	   -e 's!@BUILD_NUM@!$(BUILD_NUM)!' $< > $@
+
+install:
+	mkdir -p $(DESTDIR)$(BINDIR) ; \
+	for f in $(EXES) ; do \
+	  install -D -m 755 $$f $(DESTDIR)$(BINDIR)/$$f ; \
+	done
+
 docs:
-
-#genrand: genrand.c
-#	$(CC) -o $@ $(CFLAGS) $<
-
 
 
 clean:
-	rm -f $(EXES)
-
+	rm -f $(EXES) tlkit.spec

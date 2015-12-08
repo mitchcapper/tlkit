@@ -1,0 +1,38 @@
+Summary: tl utilities kit
+Name: tlkit
+Version: @VERSION@
+Release: 1.@BUILD_NUM@%{?dist}
+License: GPL
+Group: System Environment/Base
+URL: http://www.0ink.net
+
+Source0: tlkit-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+
+%description
+Turtle Labs command line utilities kit.
+
+%prep
+%setup -q
+
+%build
+make VERSION=%{version}-%{release} OPTFLAGS="%{optflags}"
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root,-)
+/usr/bin/*
+
+#doc %{_mandir}/man?/*
+%doc LICENSE *.txt README.md
+
+%changelog
+
+* Tue Dec 08 2015 Alejandro Liu Ly <alejandro_liu@hotmail.com> - 0.1.0-1
+- Initial version

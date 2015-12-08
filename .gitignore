@@ -1,3 +1,5 @@
+*.spec
+*.tar.gz
 genrand
 lomount
 md5tee
