@@ -10,15 +10,43 @@ owner=$(echo "$GITHUB_USER" | cut -d: -f1)
 repo=$(basename $(pwd))
 echo owner=$owner repo=$repo
 
-uploadto=$(
+get_upload_url() {
+  local owner="$1" repo="$2" tag="$3"
   curl \
     --user "$GITHUB_USER" \
-    "https://api.github.com/repos/$owner/$repo/releases/tags/$TRAVIS_TAG" \
+    "https://api.github.com/repos/$owner/$repo/releases/tags/$tag" \
     | awk '$1 == "\"upload_url\":" {print $2}' \
     | sed -e 's/^"//' -e 's/{.*}",*$//'
-)
-echo "$uploadto"
+}
+pre_release() {
+  local m="$1"
+  if (echo "$m" | grep -q 'rel$') ; then
+    echo '"prerelease": false,'
+  else
+    echo '"prerelease": true,'
+  fi
+}
 
+# Make sure release exists for this tag...
+uploadto=$(get_upload_url "$owner" "$repo" "$TRAVIS_TAG")
+if [ -z "$uploadto" ] ;then
+  # No valid release, create it...
+  curl --user "$GITHUB_USER" \
+    --request POST \
+    --data @- \
+    https://api.github.com/repos/$owner/$repo/releases <<-EOF
+	{
+	$(pre_release $TRAVIS_TAG)
+	 "tag_name": "$TRAVIS_TAG"
+	}
+	EOF
+  uploadto=$(get_upload_url "$owner" "$repo" "$TRAVIS_TAG")
+  if [ -z "$uploadto" ] ; then
+    echo "Unable to create release"
+    exit 1
+  fi
+fi
+echo "$uploadto"
 upload_file() {
   local file="$1"
   [ -f "$file" ] || return
