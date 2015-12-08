@@ -9,11 +9,11 @@ script:
  - docker-rpm-builder dir alanfranz/drb-epel-7-x86-64:latest . .
  - rm -f */*-debuginfo-*.rpm
  - package_cloud push aliuly/localapps/el/7 */*.el7.*.rpm
-# - "[ -n $TRAVIS_TAG ] && echo $TRAVIS_TAG"
+ - ./relmgr
 before_install:
  - sudo apt-get update
  - sudo -H pip install docker-rpm-builder
  - gem install package_cloud
 compiler: gcc
 env:
- - secure: "zZVG+4sMAKuOPgQ8PZRzxryM0oO+Xn1DKt3wfsZwJcL0aOeDA6RMB5sSAIs2uxQWl8LgpKzpKPlsIWktSu/BUntHxtTzDxYrTpN1u64YvHaRlVH64KfbP+TxnB1yEsxqnPaBanwMl/KVsElbDvLdXfdqr7jygUTNuP/0FxIUzixmk0la4V1hUvDQ+Iog6qY7u5DfNKg3ZbnrWEALAH/EN9324+sZ5nFAaqkaDtP/Mzh20SLYZS8F5hbosTCXl2lGsZqHQBnHo322IWHBCsBkRyTGGlApETQZ5xkM6TlhimH9J+dVNCRg2Xi/cEiqEqgkcM0NMSnuw+IWaHLASJy1eATzBkakreotzAIslJfexsO3fgdEguAJSTPulmWADRZUDO1DzjBRWJ7tegBj4z0Yk8rnXRqqC2IuWSFv+4nnnySG+WdUnzmey2zvtnT+YVHmQvPSm3lTBsv8NLJDNXIAkS5bQ0ulQdFUlEW37DVnL/MXlN5CRXA9uc07ufkBvuS43+/DrCqXEhjAYXU1o4o9iAVJEqCESBJW//1vNEs+UwH66NHRIRPTpbbU+SVa9Msch46wXSqkOOP5xYDJdTloyHfmeJxbfV+03IvJHY+ZlxvRXd3Y4cx4/GbOI95Gw8m8Oa31NLwIWpVD5343JLO1doh1GpYSIzhe2mHVXV7EKus="
+ - secure: "JiXJhPkUsFPJkLxCqQwN1KjuMfJE26KglOyz+cE8ZMrZWPoLKNPk4qIe6bxj029SLoFdYzl0O9ulTppTV5QlnnYoEp6P44IFkEcTT2WGfczSyjdumiqUu0eU5v6hCpcwClwI+Cxfuy3BUldR6Pn5zPwzb1JLXY7l7RMqwdLTNtxM1D6Q7La7rInM3l7txIboD99ooQixufI1CqhR6BfJLBxSCVDcFSCKGp3qOhHqeKE/6+PJ0rajZzFoGvWH9CMEugpV52AMD+dT+YZ3xfgD6aU8zVZWhaZGdjDVEMyBx0NuWVU0nxd1u2D7aBScKWew3Lyb7wESZzD8QjPed6dLheiFFQGPlejjOonnZ7GEwFBKMHfFFH5q35wgQLBaWTae+aueJpxnoPJI8wpuIqdPBDQQAXYxmH+nyht5mCJJ1/XGVJQR9UyDHwPY3sAOBK578PGbubEt7MOofToCe/zoNx+XqGLcW9JEggxZXqmHRq5DNKZB/2PHSVxfQ+bYPaj+KxukaQTb9V1aSwzTcEn8j+er5ezNWRB+XL4xmRkWfluvKKlZhE4EpEqvhoNPuRLoMPBHkZJFgNQIaNvhBO86Eq8biEzZQInn39hAjuzFXCaINqoOC86zahTckPFWLOlPVpDkBeCqm3IEU4lB1NXmzMk33M4rCO+fAgWWNZ6uN1o="
