@@ -7,9 +7,6 @@ script:
  - make OPTIMIZ="-O3 -s"
 before_install:
  - sudo apt-get update
- - wget --help
- - python --version
- - type pip
- - pip install docker-rpm-builder
- - sudo apt-get -y install docker-rpm-builder
+ - sudo pip install docker-rpm-builder
+ - # sudo apt-get -y install docker-rpm-builder
 compiler: gcc
