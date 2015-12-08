@@ -1,4 +1,5 @@
 *.spec
+*.rpm
 *.tar.gz
 genrand
 lomount
