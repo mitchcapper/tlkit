@@ -591,16 +591,16 @@ DEBUG("emit called\n");
 
 	for (w = wlist; w; w = w->next) {
 		printf("%s", w->string);
-		if (ISCSYM(w->string[0]))
+		if (ISCSYM(w->string[0]) && w->next != NULL)
 			printf(" ");
 	}
 	if (docond)
 		printf("P((");
 	else
-		printf("( ");
+		printf("(");
 	for (w = plist; w; w = w->next) {
 		printf("%s", w->string);
-		if (ISCSYM(w->string[0]))
+		if (ISCSYM(w->string[0]) && w->next != NULL && strcmp( w->next->string, ", ") )
 			printf(" ");
 	}
 	if (docond)
